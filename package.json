@@ -1,5 +1,28 @@
 {
   "dependencies": {
-    "underscore": "^1.8.3"
-  }
+    "assert": "^1.4.1",
+    "clone-deep": "^0.2.4",
+    "mocha": "^3.3.0"
+  },
+  "name": "ai-connect-4-game",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha -w "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasfeandrade/AI-connect-4-game.git"
+  },
+  "author": "Lucas Fernandes Andrade, Giuseppe Batistela",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lucasfeandrade/AI-connect-4-game/issues"
+  },
+  "homepage": "https://github.com/lucasfeandrade/AI-connect-4-game#readme",
+  "description": ""
 }
