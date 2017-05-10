@@ -10,12 +10,13 @@ module.exports = class Node {
   }
 
   createChild(position, player) {
-    for (let i = 5; i > 0; i--) {
+    // console.log(this.state);
+    for (let i = 0; i < this.state.length; i++) {
       let newState = cloneDeep(this.state)
-      let statePosition = newState[position]
-      if(statePosition[i] !== 0) {
-        statePosition[i + 1] =  player
+      if (newState[i][position] !== 0) {
+        newState[i - 1][position] = player
         this.children.push(new Node(this, newState, this.alpha, this.beta))
+        return
       }
     }
   }

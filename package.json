@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "assert": "^1.4.1",
+    "chai": "^3.5.0",
     "clone-deep": "^0.2.4",
     "mocha": "^3.3.0"
   },
