@@ -1,6 +1,17 @@
-image: node
+ image: node:argon
 
-all_tests:
-  script:
-   - npm install
-   - mocha
+  before_script:
+    - apt-get -qq update
+    - apt-get -qq install -y python2.7 python2.7-dev build-essential make gcc g++ libicu-dev
+    - npm -g install npm --silent
+    - "echo -e \"export default {CLIENT_ID: '$CLIENT_ID'}\" > app/scripts/settings.js"
+    - npm set progress=false
+    - npm install --silent
+
+  stages:
+    - test
+
+  run_tests:
+    stage: test
+    script:
+      - npm test
