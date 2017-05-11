@@ -2,6 +2,7 @@
   "dependencies": {
     "chai": "^3.5.0",
     "clone-deep": "^0.2.4",
+    "lodash": "^4.17.4",
     "mocha": "^3.3.0"
   },
   "name": "ai-connect-4-game",
@@ -12,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
   },
   "repository": {
     "type": "git",
