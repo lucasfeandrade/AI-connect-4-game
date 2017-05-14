@@ -1,16 +1,18 @@
 
-// Player 1 = Human
-// Player 2 = Computer
+
 function minimax(node, alpha, beta, player) {
-  if node.isGameOver(node)
-    return node.findUtility()
-    // Creating all child
+  if (node.isGameOver()) return node.findUtility()
     if (player === 1) {
       let value = 1000000000
       for (let position = 0; position < 6; position++) {
-        node.createChild(position, player)
-        value = Math.min(value, minimax(CHILD, alpha, beta, player))
-        beta = Math.min(beta, value)
+        //TODO Ele ta retornando sempre undefined, mas no teste funciona
+        let nodeChild = node.createChild(position, player)
+        if (nodeChild !== undefined) {
+          // TODO : confirma se faz sentido trocar sempre o jogador
+          player = (player === 1) ? 2 : 1
+          value = Math.min(value, minimax(nodeChild, alpha, beta, player))
+          beta = Math.min(beta, value)
+        }
         if (beta <= alpha)
           break
       }
@@ -18,13 +20,19 @@ function minimax(node, alpha, beta, player) {
     else {
       let value = 0
       for (let position = 0; position < 6; position++) {
-        node.createChild(position, player)
-        // Estava pensando em fazer assim, mas para funcionar bem acredito q a
-        // funcao createChild deve retornar o filho criado para substituir no CHILD
-        value = Math.max(value, minimax(CHILD, alpha, beta, player))
-        alpha = Math.max(alpha, value)
+        //TODO Ele ta retornando sempre undefined, mas no teste funciona
+        let nodeChild = node.createChild(position, player)
+
+        if (nodeChild !== undefined) {
+          // TODO : confirma se faz sentido trocar sempre o jogador
+          player = (player === 1) ? 2 : 1
+          value = Math.max(value, minimax(nodeChild, alpha, beta, player))
+          alpha = Math.max(alpha, value)
+        }
         if (beta <= alpha)
           break
         }
     }
 }
+
+module.exports = minimax

@@ -1,7 +1,7 @@
 const assert = require('chai').assert;
 const expect = require('chai').expect;
 const State = require('../src/node')
-
+const minimax = require('../src/algorithm')
 
 describe('Testing Node Class', function() {
   'use strict'
@@ -189,7 +189,6 @@ describe('Testing Node Class', function() {
     it('should return false (empty board)', function() {
       assert.equal(startNode.isGameOver(), false)
     });
-
     it('should return true (it has a quadra and is not full)', function() {
       assert.equal(firstNode.isGameOver(), true)
     });
@@ -198,6 +197,31 @@ describe('Testing Node Class', function() {
     });
     it('should return true (there is no quadra and but it is full)', function() {
       assert.equal(fullNode.isGameOver(), true)
+    });
+  });
+
+  describe('minimax', function() {
+    const startState = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0]
+    ]
+    const finalState = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 2, 0, 0, 0],
+      [0, 0, 0, 1, 0, 0, 0]
+    ]
+    let startNode = new State(undefined, startState, 0, 0, 0)
+    let children = startNode.createChild(3, 2)
+    //TODO precisa criar um teste que faca sentido
+    it('should do something', function() {
+      assert.equal(minimax(startNode, 100000, 1, 2), true)
     });
   });
 
