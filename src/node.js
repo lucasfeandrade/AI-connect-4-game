@@ -1,47 +1,51 @@
 const _ = require('lodash')
 
 module.exports = class Node {
-  constructor(parent, state, alpha, beta, player) {
+  constructor(parent, state, alpha, beta, depth) {
     this.parent = parent
     this.state = state
+    this.depth = depth
     this.alpha = alpha
     this.beta = beta
-    this.children = []
-    this.pieces = this.findPieces(player)
+    // this.children = []
+    this.ownPieces = this.findPieces(1)
+    this.advPieces = this.findPieces(2)
   }
 
   createChild(position, player) {
+    if (this.isColumnFull(position)) return undefined
+
     let stateLength = this.state.length
-    for (let i = 0; i < stateLength ; i++) {
+    for (let i = 0; i < stateLength; i++) {
       let newState = _.cloneDeep(this.state)
       if (newState[i][position] !== 0) {
         newState[i - 1][position] = player
         //Ve se faz sentido isso Giuseppe
-        if (player === 1)
-          this.children.push(new Node(this, newState, this.alpha, this.beta, 2))
-        if (player === 2)
-          this.children.push(new Node(this, newState, this.alpha, this.beta, 1))
-        return
+        return new Node(this, newState, this.alpha, this.beta, this.depth + 1)
       }
     }
   }
 
-  isLeaf() {
-    console.log('inside is leaf')
-    let pieces = this.pieces
-    for(let position = 0; position < 6; position ++) {
-      if (this.isColumnFull(position))
-        return true
+  isGameOver() {
+    if (this.isBoardFull()) return true;
+    for (let piece of this.ownPieces) {
+      if (piece.length === 4) return true
     }
-    for (let piece of pieces) {
-      if ( piece.length === 4 )
-        return true
+    for (let piece of this.advPieces) {
+      if (piece.length === 4) return true
     }
     return false
   }
 
-  isColumnFull(position){
-    return this.state[0][position] !== 0 ? true : false
+  isBoardFull() {
+    for (let col = 0; col < this.state.length; col++) {
+      if (!this.isColumnFull(col)) return false;
+    }
+    return true;
+  }
+
+  isColumnFull(col) {
+    return this.state[0][col] !== 0;
   }
 
   findPieces(player) {
@@ -126,25 +130,28 @@ module.exports = class Node {
   }
 
   findUtility() {
-    let pieces = this.pieces
-    let value = 0
-    for (let piece of pieces) {
-      let pieceLength = piece.length
-      if (pieceLength === 2) {
-        // 420 for each piece
-        value = value + 420
-      }
-      if (pieceLength === 3) {
-        // 8820 for each piece
-        value = value + 8820
-      }
-
-      if (pieceLength >= 4) {
-        // 123480 for each piece
-        value = value + 123480
+    let score = 0;
+    let pieces = [this.ownPieces, this.advPieces]
+    for (let player of [1, 2]) {
+      let playerPieces = pieces[player - 1]
+      for (let piece of playerPieces) {
+        let pieceLength = piece.length;
+        let value = 0;
+        if (pieceLength === 2) {
+          // 420 for each piece
+          value = 420;
+        } else if (pieceLength === 3) {
+          // 8820 for each piece
+          value = 8820;
+        } else if (pieceLength >= 4) {
+          // 123480 for each piece
+          value = 123480;
+        }
+        if (player === 1) score += value;
+        else score -= value;
       }
     }
-    return value
+    return score;
   }
 
 }
