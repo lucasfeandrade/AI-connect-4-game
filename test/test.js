@@ -72,4 +72,24 @@ describe('Testing Node Class', function() {
     });
   });
 
+  describe('findUtility', function() {
+    const initialState = [
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0, 0],
+      [0, 1, 2, 0, 0, 0, 0],
+      [2, 0, 2, 0, 2, 2, 2]
+    ]
+
+    let newNode = new State(undefined, initialState, 0, 0)
+    let pieces = newNode.findPieces(2)
+    let value = newNode.findUtility(pieces)
+    it('return value expected value for one vertical pair and one horizontal triple', function() {
+      assert.equal(value, 9240)
+    });
+  });
+
+
+
 });

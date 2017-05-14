@@ -20,6 +20,8 @@ module.exports = class Node {
     }
   }
 
+
+
   findPieces(player) {
     let pieces = [];
     this.horizontalSearch(player).forEach((piece) => {
@@ -97,5 +99,28 @@ module.exports = class Node {
       }
     }
     return pieces;
+  }
+
+  findUtility(pieces) {
+    let value = 0
+    for (let piece of pieces) {
+      if (piece.length === 2) {
+        // 420 for each piece
+        value = value + 420
+      }
+      if (piece.length === 3) {
+        // 8820 for each piece
+        value = value + 8820
+      }
+
+      if (piece.length >= 4) {
+        // 123480 for each piece
+        value = value + 123480
+      }
+    }
+    return value
+  }
+
+  isLeaf() {
   }
 }

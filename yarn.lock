@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+appjs@^0.0.20:
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/appjs/-/appjs-0.0.20.tgz#32cd62d7e8b4d9081738ba32d9fc1bd7ce1b5f50"
+  dependencies:
+    mime ">=1.2.5"
+
 assertion-error@^1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/assertion-error/-/assertion-error-1.0.2.tgz#13ca515d86206da0bac66e834dd397d87581094c"
@@ -151,6 +157,10 @@ lodash.keys@^3.0.0:
 lodash@^4.17.4:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
+
+mime@>=1.2.5:
+  version "1.3.6"
+  resolved "https://registry.yarnpkg.com/mime/-/mime-1.3.6.tgz#591d84d3653a6b0b4a3b9df8de5aa8108e72e5e0"
 
 minimatch@^3.0.2:
   version "3.0.4"
