@@ -16,7 +16,11 @@ module.exports = class Node {
       let newState = _.cloneDeep(this.state)
       if (newState[i][position] !== 0) {
         newState[i - 1][position] = player
-        this.children.push(new Node(this, newState, this.alpha, this.beta))
+        //Ve se faz sentido isso Giuseppe
+        if (player === 1)
+          this.children.push(new Node(this, newState, this.alpha, this.beta, 2))
+        if (player === 2)
+          this.children.push(new Node(this, newState, this.alpha, this.beta, 1))
         return
       }
     }
@@ -35,7 +39,6 @@ module.exports = class Node {
     }
     return false
   }
-
 
   isColumnFull(position){
     return this.state[0][position] !== 0 ? true : false
