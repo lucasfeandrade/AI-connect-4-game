@@ -2,7 +2,7 @@
 // Player 1 = Human
 // Player 2 = Computer
 function minimax(node, alpha, beta, player) {
-  if node.isLeaf(node)
+  if node.isGameOver(node)
     return node.findUtility()
     // Creating all child
     if (player === 1) {

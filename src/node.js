@@ -1,5 +1,8 @@
 const _ = require('lodash')
 
+const WIDTH = 7
+const HEIGHT = 6
+
 module.exports = class Node {
   constructor(parent, state, alpha, beta, depth) {
     this.parent = parent
@@ -14,13 +17,10 @@ module.exports = class Node {
 
   createChild(position, player) {
     if (this.isColumnFull(position)) return undefined
-
-    let stateLength = this.state.length
-    for (let i = 0; i < stateLength; i++) {
+    for (let i = 0; i < HEIGHT; i++) {
       let newState = _.cloneDeep(this.state)
       if (newState[i][position] !== 0) {
         newState[i - 1][position] = player
-        //Ve se faz sentido isso Giuseppe
         return new Node(this, newState, this.alpha, this.beta, this.depth + 1)
       }
     }
@@ -38,7 +38,7 @@ module.exports = class Node {
   }
 
   isBoardFull() {
-    for (let col = 0; col < this.state.length; col++) {
+    for (let col = 0; col < HEIGHT; col++) {
       if (!this.isColumnFull(col)) return false;
     }
     return true;
@@ -63,11 +63,10 @@ module.exports = class Node {
     let found = false;
     let pieceSize = 0;
     let pieces = [];
-    let stateLength = this.state.length;
-    for (let i = 0; i < stateLength; i++) {
+    for (let i = 0; i < HEIGHT; i++) {
       found = false;
       pieceSize = 0;
-      for (var j = 0; j < this.state[i].length; j++) {
+      for (var j = 0; j < WIDTH; j++) {
         if (this.state[i][j] === player) {
           found = true;
           pieceSize++;
@@ -82,7 +81,7 @@ module.exports = class Node {
           }
           pieceSize = 0;
         }
-        if (found && j === this.state[i].length - 1 && pieceSize > 1) {
+        if (found && j === WIDTH - 1 && pieceSize > 1) {
           let temp = [];
           for (let k of _.range(pieceSize)) {
             temp.push([j - k, i]);
@@ -98,11 +97,10 @@ module.exports = class Node {
     let found = false;
     let pieceSize = 0;
     let pieces = [];
-    let stateLength = this.state.length;
-    for (let j = 0; j < this.state[0].length; j++) {
+    for (let j = 0; j < WIDTH; j++) {
       found = false;
       pieceSize = 0;
-      for (var i = 0; i < stateLength; i++) {
+      for (var i = 0; i < HEIGHT; i++) {
         if (this.state[i][j] === player) {
           found = true;
           pieceSize++;
@@ -117,7 +115,7 @@ module.exports = class Node {
           }
           pieceSize = 0;
         }
-        if (found && i === stateLength - 1 && pieceSize > 1) {
+        if (found && i === HEIGHT - 1 && pieceSize > 1) {
           let temp = [];
           for (let k of _.range(pieceSize)) {
             temp.push([j, i - k]);
