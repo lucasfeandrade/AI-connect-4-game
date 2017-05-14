@@ -1,12 +1,13 @@
 const _ = require('lodash')
 
 module.exports = class Node {
-  constructor(parent, state, alpha, beta) {
+  constructor(parent, state, alpha, beta, player) {
     this.parent = parent
     this.state = state
     this.alpha = alpha
     this.beta = beta
     this.children = []
+    this.pieces = this.findPieces(player)
   }
 
   createChild(position, player) {
@@ -20,6 +21,21 @@ module.exports = class Node {
       }
     }
   }
+
+  isLeaf() {
+    console.log('inside is leaf')
+    let pieces = this.pieces
+    for(let position = 0; position < 6; position ++) {
+      if (this.isColumnFull(position))
+        return true
+    }
+    for (let piece of pieces) {
+      if ( piece.length === 4 )
+        return true
+    }
+    return false
+  }
+
 
   isColumnFull(position){
     return this.state[0][position] !== 0 ? true : false
@@ -106,7 +122,8 @@ module.exports = class Node {
     return pieces;
   }
 
-  findUtility(pieces) {
+  findUtility() {
+    let pieces = this.pieces
     let value = 0
     for (let piece of pieces) {
       let pieceLength = piece.length
@@ -127,6 +144,4 @@ module.exports = class Node {
     return value
   }
 
-  isLeaf() {
-  }
 }

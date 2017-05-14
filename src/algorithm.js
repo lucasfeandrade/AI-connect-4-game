@@ -7,7 +7,7 @@ function minimax(node, alpha, beta, player) {
   // Creating all child
   for (let position = 0; position < 6; position++) {
     node.createChild(position, player)
-
+    
   }
 
 
