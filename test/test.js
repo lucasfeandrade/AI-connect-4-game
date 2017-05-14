@@ -83,7 +83,7 @@ describe('Testing Node Class', function() {
     let value = newNode.findUtility()
     console.log(value);
     it('return value expected value for one vertical pair and one horizontal triple', function() {
-      assert.equal(value, 9240)
+      assert.equal(value, 420 + 8820)
     });
   });
 
