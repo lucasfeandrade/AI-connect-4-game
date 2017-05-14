@@ -90,6 +90,36 @@ describe('Testing Node Class', function() {
     });
   });
 
+  describe('isColumnFull', function() {
+    const initialState = [
+      [2, 2, 1, 2, 1, 2, 1],
+      [1, 2, 1, 1, 1, 2, 2],
+      [2, 2, 1, 2, 1, 2, 2],
+      [2, 2, 1, 1, 1, 2, 2],
+      [2, 1, 2, 2, 2, 2, 2],
+      [2, 1, 2, 1, 2, 1, 2]
+    ]
+    const secondState = [
+      [2, 2, 0, 2, 1, 2, 1],
+      [1, 2, 1, 1, 1, 2, 2],
+      [2, 2, 1, 2, 1, 2, 2],
+      [2, 2, 1, 1, 1, 2, 2],
+      [2, 1, 2, 2, 2, 2, 2],
+      [2, 1, 2, 1, 2, 1, 2]
+    ]
+
+    let firstNode = new State(undefined, initialState, 0, 0)
+    let secondNode = new State(undefined, secondState, 0, 0)
+
+    it('should return true for all columns', function() {
+      for (let position = 0; position < 6; position ++) {
+        assert.equal(firstNode.isColumnFull(position), true)
+      }
+    });
+    it('should return false for column 3', function() {
+      assert.equal(secondNode.isColumnFull(2), false)
+    });
+  });
 
 
 });

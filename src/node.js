@@ -10,7 +10,8 @@ module.exports = class Node {
   }
 
   createChild(position, player) {
-    for (let i = 0; i < this.state.length; i++) {
+    let stateLength = this.state.length
+    for (let i = 0; i < stateLength ; i++) {
       let newState = _.cloneDeep(this.state)
       if (newState[i][position] !== 0) {
         newState[i - 1][position] = player
@@ -20,7 +21,9 @@ module.exports = class Node {
     }
   }
 
-
+  isColumnFull(position){
+    return this.state[0][position] !== 0 ? true : false
+  }
 
   findPieces(player) {
     let pieces = [];
@@ -37,7 +40,8 @@ module.exports = class Node {
     let found = false;
     let pieceSize = 0;
     let pieces = [];
-    for (let i = 0; i < this.state.length; i++) {
+    let stateLength = this.state.length;
+    for (let i = 0; i < stateLength; i++) {
       found = false;
       pieceSize = 0;
       for (var j = 0; j < this.state[i].length; j++) {
@@ -71,10 +75,11 @@ module.exports = class Node {
     let found = false;
     let pieceSize = 0;
     let pieces = [];
+    let stateLength = this.state.length;
     for (let j = 0; j < this.state[0].length; j++) {
       found = false;
       pieceSize = 0;
-      for (var i = 0; i < this.state.length; i++) {
+      for (var i = 0; i < stateLength; i++) {
         if (this.state[i][j] === player) {
           found = true;
           pieceSize++;
@@ -89,7 +94,7 @@ module.exports = class Node {
           }
           pieceSize = 0;
         }
-        if (found && i === this.state.length - 1 && pieceSize > 1) {
+        if (found && i === stateLength - 1 && pieceSize > 1) {
           let temp = [];
           for (let k of _.range(pieceSize)) {
             temp.push([j, i - k]);
@@ -104,16 +109,17 @@ module.exports = class Node {
   findUtility(pieces) {
     let value = 0
     for (let piece of pieces) {
-      if (piece.length === 2) {
+      let pieceLength = piece.length
+      if (pieceLength === 2) {
         // 420 for each piece
         value = value + 420
       }
-      if (piece.length === 3) {
+      if (pieceLength === 3) {
         // 8820 for each piece
         value = value + 8820
       }
 
-      if (piece.length >= 4) {
+      if (pieceLength >= 4) {
         // 123480 for each piece
         value = value + 123480
       }
