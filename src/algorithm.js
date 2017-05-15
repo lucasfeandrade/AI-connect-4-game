@@ -7,10 +7,11 @@ function minimax(node, alpha, beta) {
   let isMax = node.depth % 2 === 0;
   let player = (node.depth % 2) + 1;
   let value = (isMax) ? NegInf : Inf;
+
   let movePos;
 
   if (node.isGameOver()) return [node.findUtility(), undefined]
-  if (node.depth >= 6) return [node.findUtility(), undefined]
+  if (node.depth >= 8) return [node.findUtility(), undefined]
 
   for (let pos of [3, 4, 2, 5, 1, 6, 0]) {
     let nodeChild = node.createChild(pos, player);
