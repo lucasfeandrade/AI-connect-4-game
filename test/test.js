@@ -26,13 +26,13 @@ describe('Testing Node Class', function() {
     ]
 
     it('should create a child', function() {
-      let newNode = new State(undefined, initialState, 0, 0, 0)
+      let newNode = new State(undefined, initialState, 0)
       let newChild = newNode.createChild(2, 1)
       assert.equal(typeof newNode, typeof newChild)
     });
 
     it('should put player one at third column', function() {
-      let newNode = new State(undefined, initialState, 0, 0, 0)
+      let newNode = new State(undefined, initialState, 0)
       let newChild = newNode.createChild(2, 1)
       assert.deepEqual(finalState, newChild.state)
     });
@@ -54,24 +54,24 @@ describe('Testing Node Class', function() {
       [2, 1, 1, 1, 1, 1, 1]
     ]
     it('should put player one at 4th column', function() {
-      let newNode = new State(undefined, initialState2, 0, 0, 0)
+      let newNode = new State(undefined, initialState2, 0)
       let newChild = newNode.createChild(3, 1)
       assert.deepEqual(finalState2, newChild.state)
     });
   });
 
   describe('findPieces', function() {
-    let initialState = [
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 2, 0, 0, 0, 0],
-      [0, 0, 2, 0, 0, 0, 0],
-      [0, 0, 2, 0, 0, 0, 0],
-      [2, 2, 2, 0, 2, 2, 2]
-    ]
 
     it('should find a 3-piece', function() {
-      let newNode = new State(undefined, initialState, 0, 0, 2)
+      let initialState = [
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [2, 2, 2, 0, 2, 2, 2]
+      ]
+      let newNode = new State(undefined, initialState, 0)
       let pieces = newNode.findPieces(2)
       let expPieces = [
         [
@@ -85,9 +85,60 @@ describe('Testing Node Class', function() {
           [6, 5],
         ]
       ]
-      // assert.sameDeepMembers(expPieces[1], pieces[1])
       expect(pieces[0]).to.deep.have.members(expPieces[0])
       expect(pieces[1]).to.deep.have.members(expPieces[1])
+    });
+
+    it('should find a 6-piece and a 3-piece diagonally', function() {
+      let initialState = [
+        [0, 2, 0, 0, 0, 0, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 0, 1, 2, 0, 0, 0],
+        [0, 0, 2, 0, 2, 0, 0],
+        [0, 0, 1, 2, 0, 2, 0],
+        [2, 1, 1, 0, 2, 1, 2]
+      ]
+      let newNode = new State(undefined, initialState, 0)
+      let pieces = newNode.findPieces(2)
+      let expPieces = [
+        [
+          [1, 0],
+          [2, 1],
+          [3, 2],
+          [4, 3],
+          [5, 4],
+          [6, 5]
+        ],
+        [
+          [2, 3],
+          [3, 4],
+          [4, 5]
+        ]
+      ]
+      expect(pieces[0]).to.deep.have.members(expPieces[0])
+      expect(pieces[1]).to.deep.have.members(expPieces[1])
+    });
+
+    it('should find a 4-piece diagonally', function() {
+      let initialState = [
+        [0, 0, 0, 2, 0, 2, 0],
+        [0, 0, 2, 0, 0, 0, 0],
+        [0, 2, 0, 0, 0, 0, 0],
+        [2, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 2, 0, 2],
+        [0, 0, 0, 0, 0, 1, 0]
+      ]
+      let newNode = new State(undefined, initialState, 0)
+      let pieces = newNode.findPieces(2)
+      let expPieces = [
+        [
+          [0, 3],
+          [1, 2],
+          [2, 1],
+          [3, 0]
+        ]
+      ]
+      expect(pieces[0]).to.deep.have.members(expPieces[0])
     });
   });
 
@@ -101,7 +152,7 @@ describe('Testing Node Class', function() {
       [1, 0, 1, 0, 1, 1, 1]
     ]
 
-    let newNode = new State(undefined, initialState, 0, 0, 1)
+    let newNode = new State(undefined, initialState, 0)
     let value = newNode.findUtility()
     it('return value expected value for one vertical pair and one horizontal triple', function() {
       assert.equal(value, 420 + 8820)
@@ -133,8 +184,8 @@ describe('Testing Node Class', function() {
       [1, 2, 2, 0, 1, 2, 2],
       [2, 1, 1, 0, 1, 1, 1]
     ]
-    let firstNode = new State(undefined, initialState, 0, 0)
-    let secondNode = new State(undefined, secondState, 0, 0)
+    let firstNode = new State(undefined, initialState, 0)
+    let secondNode = new State(undefined, secondState, 0)
     let node3 = new State(undefined, state3, 0, 0)
 
     it('should return true for all columns', function() {
@@ -168,8 +219,8 @@ describe('Testing Node Class', function() {
       [2, 1, 2, 1, 2, 1, 2]
     ]
 
-    let firstNode = new State(undefined, initialState, 0, 0, 2)
-    let secondNode = new State(undefined, secondState, 0, 0, 2)
+    let firstNode = new State(undefined, initialState, 0)
+    let secondNode = new State(undefined, secondState, 0)
 
     it('should return true', function() {
       assert.equal(firstNode.isBoardFull(), true)
@@ -213,10 +264,10 @@ describe('Testing Node Class', function() {
       [2, 0, 0, 1, 1, 2, 2]
     ]
 
-    let startNode = new State(undefined, startState, 0, 0, 0)
-    let firstNode = new State(undefined, quadraState, 0, 0, 0)
-    let notFinishedNode = new State(undefined, notFinishedState, 0, 0, 0)
-    let fullNode = new State(undefined, fullState, 0, 0, 0)
+    let startNode = new State(undefined, startState, 0)
+    let firstNode = new State(undefined, quadraState, 0)
+    let notFinishedNode = new State(undefined, notFinishedState, 0)
+    let fullNode = new State(undefined, fullState, 0)
 
     it('should return false (empty board)', function() {
       assert.equal(startNode.isGameOver(), false)

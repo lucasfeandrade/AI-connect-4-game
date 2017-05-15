@@ -51,10 +51,13 @@ module.exports = class Node {
 
   findPieces(player) {
     let pieces = [];
-    this.horizontalSearch(player).forEach((piece) => {
+    this.horizontalSearch(player).forEach(piece => {
       pieces.push(piece);
     });
-    this.verticalSearch(player).forEach((piece) => {
+    this.verticalSearch(player).forEach(piece => {
+      pieces.push(piece);
+    });
+    this.diagonalSearch(player).forEach(piece => {
       pieces.push(piece);
     });
     return pieces;
@@ -128,6 +131,72 @@ module.exports = class Node {
     return pieces;
   }
 
+  diagonalSearch(player) {
+    let found = false;
+    let pieceSize = 0;
+    let pieces = [];
+
+    for (let i = -3; i <= 2; i++) {
+      found = false;
+      pieceSize = 0;
+      for (let j = -2; j <= 6; j++) {
+        if (i + j > 5 || i + j < 0) continue;
+        if (this.state[i + j][j] === player) {
+          found = true;
+          pieceSize++;
+        } else {
+          found = false;
+          if (pieceSize > 1) {
+            let temp = [];
+            for (let k of _.range(1, pieceSize + 1)) {
+              temp.push([j - k, i + j - k]);
+            }
+            pieces.push(temp);
+          }
+          pieceSize = 0;
+        }
+        if (found && (i + j + 1 === HEIGHT || j + 1 === WIDTH) && pieceSize > 1) {
+          let temp = [];
+          for (let k of _.range(pieceSize)) {
+            temp.push([j - k, i + j - k]);
+          }
+          pieces.push(temp);
+        }
+      }
+    }
+
+    for (let i = 3; i <= 8; i++) {
+      found = false;
+      pieceSize = 0;
+      for (let j = 0; j <= 6; j++) {
+        if (i - j > 5 || i - j < 0) continue;
+        if (this.state[i - j][j] === player) {
+          found = true;
+          pieceSize++;
+        } else {
+          found = false;
+          if (pieceSize > 1) {
+            let temp = [];
+            for (let k of _.range(1, pieceSize + 1)) {
+              temp.push([j - k, i - j + k]);
+            }
+            pieces.push(temp);
+          }
+          pieceSize = 0;
+        }
+        if (found && (i - j === 0 || j + 1 === WIDTH) && pieceSize > 1) {
+          let temp = [];
+          for (let k of _.range(pieceSize)) {
+            temp.push([j - k, i - j + k]);
+          }
+          pieces.push(temp);
+        }
+      }
+    }
+
+    return pieces;
+  }
+
   findUtility() {
     let score = 0;
     let pieces = [this.ownPieces, this.advPieces]
@@ -152,5 +221,4 @@ module.exports = class Node {
     }
     return score;
   }
-
 }
