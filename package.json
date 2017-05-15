@@ -12,7 +12,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "mocha -w"
+    "test": "mocha -w",
+    "test_once": "mocha"
   },
   "repository": {
     "type": "git",

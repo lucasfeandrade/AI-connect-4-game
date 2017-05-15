@@ -81,7 +81,6 @@ describe('Testing Node Class', function() {
 
     let newNode = new State(undefined, initialState, 0, 0, 1)
     let value = newNode.findUtility()
-    console.log(value);
     it('return value expected value for one vertical pair and one horizontal triple', function() {
       assert.equal(value, 420 + 8820)
     });
@@ -200,29 +199,29 @@ describe('Testing Node Class', function() {
     });
   });
 
-  describe('minimax', function() {
-    const startState = [
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 0, 0, 0]
-    ]
-    const finalState = [
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 2, 0, 0, 0],
-      [0, 0, 0, 1, 0, 0, 0]
-    ]
-    let startNode = new State(undefined, startState, 0, 0, 0)
-    let children = startNode.createChild(3, 2)
-    //TODO precisa criar um teste que faca sentido
-    it('should do something', function() {
-      assert.equal(minimax(startNode, 100000, 1, 2), true)
-    });
-  });
+  // describe('minimax', function() {
+  //   const startState = [
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 1, 0, 0, 0]
+  //   ]
+  //   const finalState = [
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 0, 0, 0, 0],
+  //     [0, 0, 0, 2, 0, 0, 0],
+  //     [0, 0, 0, 1, 0, 0, 0]
+  //   ]
+  //   let startNode = new State(undefined, startState, 0, 0, 0)
+  //   let children = startNode.createChild(3, 2)
+  //   //TODO precisa criar um teste que faca sentido
+  //   it('should do something', function() {
+  //     assert.equal(minimax(startNode, 100000, 1, 2), true)
+  //   });
+  // });
 
 });
