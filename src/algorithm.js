@@ -1,38 +1,40 @@
+const Inf = Infinity;
+const NegInf = Math.log(0);
 
+function minimax(node, alpha, beta) {
+  'use strict'
 
-function minimax(node, alpha, beta, player) {
-  if (node.isGameOver()) return node.findUtility()
-    if (player === 1) {
-      let value = 1000000000
-      for (let position = 0; position < 6; position++) {
-        //TODO Ele ta retornando sempre undefined, mas no teste funciona
-        let nodeChild = node.createChild(position, player)
-        if (nodeChild !== undefined) {
-          // TODO : confirma se faz sentido trocar sempre o jogador
-          player = (player === 1) ? 2 : 1
-          value = Math.min(value, minimax(nodeChild, alpha, beta, player))
-          beta = Math.min(beta, value)
+  let isMax = node.depth % 2 === 0;
+  let player = (node.depth % 2) + 1;
+  let value = (isMax) ? NegInf : Inf;
+  let movePos;
+
+  if (node.isGameOver()) return [node.findUtility(), undefined]
+  if (node.depth >= 6) return [node.findUtility(), undefined]
+
+  for (let pos of [3, 4, 2, 5, 1, 6, 0]) {
+    let nodeChild = node.createChild(pos, player);
+    if (nodeChild) {
+      let childValue = minimax(nodeChild, alpha, beta)[0];
+      if (isMax) {
+        if (childValue > value) {
+          value = childValue;
+          movePos = pos;
         }
-        if (beta <= alpha)
-          break
+        alpha = Math.max(alpha, value)
+      } else {
+        if (childValue < value) {
+          value = childValue;
+          movePos = pos;
+        }
+        beta = Math.min(beta, value)
+      }
+      if (alpha >= beta) {
+        return [value, movePos];
       }
     }
-    else {
-      let value = 0
-      for (let position = 0; position < 6; position++) {
-        //TODO Ele ta retornando sempre undefined, mas no teste funciona
-        let nodeChild = node.createChild(position, player)
-
-        if (nodeChild !== undefined) {
-          // TODO : confirma se faz sentido trocar sempre o jogador
-          player = (player === 1) ? 2 : 1
-          value = Math.max(value, minimax(nodeChild, alpha, beta, player))
-          alpha = Math.max(alpha, value)
-        }
-        if (beta <= alpha)
-          break
-        }
-    }
+  }
+  return [value, movePos];
 }
 
-module.exports = minimax
+module.exports = { minimax }

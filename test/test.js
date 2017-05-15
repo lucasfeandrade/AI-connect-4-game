@@ -8,7 +8,7 @@ describe('Testing Node Class', function() {
 
   describe('createChild', function() {
 
-    const initialState = [
+    let initialState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
@@ -16,7 +16,7 @@ describe('Testing Node Class', function() {
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 2, 0, 0, 0, 0]
     ]
-    const finalState = [
+    let finalState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
@@ -36,10 +36,32 @@ describe('Testing Node Class', function() {
       let newChild = newNode.createChild(2, 1)
       assert.deepEqual(finalState, newChild.state)
     });
+
+    let initialState2 = [
+      [1, 2, 0, 0, 0, 2, 1],
+      [2, 1, 1, 0, 2, 2, 2],
+      [1, 2, 2, 0, 1, 1, 1],
+      [2, 1, 1, 0, 2, 2, 1],
+      [1, 2, 2, 0, 1, 2, 2],
+      [2, 1, 1, 0, 1, 1, 1]
+    ]
+    let finalState2 = [
+      [1, 2, 0, 0, 0, 2, 1],
+      [2, 1, 1, 0, 2, 2, 2],
+      [1, 2, 2, 0, 1, 1, 1],
+      [2, 1, 1, 0, 2, 2, 1],
+      [1, 2, 2, 0, 1, 2, 2],
+      [2, 1, 1, 1, 1, 1, 1]
+    ]
+    it('should put player one at 4th column', function() {
+      let newNode = new State(undefined, initialState2, 0, 0, 0)
+      let newChild = newNode.createChild(3, 1)
+      assert.deepEqual(finalState2, newChild.state)
+    });
   });
 
   describe('findPieces', function() {
-    const initialState = [
+    let initialState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 2, 0, 0, 0, 0],
@@ -70,7 +92,7 @@ describe('Testing Node Class', function() {
   });
 
   describe('findUtility', function() {
-    const initialState = [
+    let initialState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
@@ -87,7 +109,7 @@ describe('Testing Node Class', function() {
   });
 
   describe('isColumnFull', function() {
-    const initialState = [
+    let initialState = [
       [2, 2, 1, 2, 1, 2, 1],
       [1, 2, 1, 1, 1, 2, 2],
       [2, 2, 1, 2, 1, 2, 2],
@@ -95,7 +117,7 @@ describe('Testing Node Class', function() {
       [2, 1, 2, 2, 2, 2, 2],
       [2, 1, 2, 1, 2, 1, 2]
     ]
-    const secondState = [
+    let secondState = [
       [2, 2, 0, 2, 1, 2, 1],
       [1, 2, 1, 1, 1, 2, 2],
       [2, 2, 1, 2, 1, 2, 2],
@@ -103,9 +125,17 @@ describe('Testing Node Class', function() {
       [2, 1, 2, 2, 2, 2, 2],
       [2, 1, 2, 1, 2, 1, 2]
     ]
-
-    let firstNode = new State(undefined, initialState, 0, 0, 2)
-    let secondNode = new State(undefined, secondState, 0, 0, 2)
+    let state3 = [
+      [1, 2, 0, 0, 0, 2, 1],
+      [2, 1, 1, 0, 2, 2, 2],
+      [1, 2, 2, 0, 1, 1, 1],
+      [2, 1, 1, 0, 2, 2, 1],
+      [1, 2, 2, 0, 1, 2, 2],
+      [2, 1, 1, 0, 1, 1, 1]
+    ]
+    let firstNode = new State(undefined, initialState, 0, 0)
+    let secondNode = new State(undefined, secondState, 0, 0)
+    let node3 = new State(undefined, state3, 0, 0)
 
     it('should return true for all columns', function() {
       for (let position = 0; position < 6; position++) {
@@ -115,10 +145,13 @@ describe('Testing Node Class', function() {
     it('should return false for column 3', function() {
       assert.equal(secondNode.isColumnFull(2), false)
     });
+    it('should return false for column 4', function() {
+      assert.equal(node3.isColumnFull(3), false)
+    });
   });
 
   describe('isBoardFull', function() {
-    const initialState = [
+    let initialState = [
       [2, 2, 1, 2, 1, 2, 1],
       [1, 2, 1, 1, 1, 2, 2],
       [2, 2, 1, 2, 1, 2, 2],
@@ -126,7 +159,7 @@ describe('Testing Node Class', function() {
       [2, 1, 2, 2, 2, 2, 2],
       [2, 1, 2, 1, 2, 1, 2]
     ]
-    const secondState = [
+    let secondState = [
       [2, 2, 0, 2, 1, 2, 1],
       [1, 2, 1, 1, 1, 2, 2],
       [2, 2, 1, 2, 1, 2, 2],
@@ -147,7 +180,7 @@ describe('Testing Node Class', function() {
   });
 
   describe('isGameOver', function() {
-    const startState = [
+    let startState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
@@ -155,7 +188,7 @@ describe('Testing Node Class', function() {
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0]
     ]
-    const quadraState = [
+    let quadraState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [2, 0, 0, 0, 0, 0, 0],
@@ -163,7 +196,7 @@ describe('Testing Node Class', function() {
       [2, 0, 0, 2, 1, 0, 1],
       [2, 0, 0, 1, 1, 2, 2]
     ]
-    const fullState = [
+    let fullState = [
       [1, 2, 2, 1, 1, 2, 1],
       [2, 1, 1, 1, 2, 2, 2],
       [2, 1, 2, 2, 1, 2, 1],
@@ -171,7 +204,7 @@ describe('Testing Node Class', function() {
       [1, 2, 1, 2, 2, 1, 2],
       [2, 2, 2, 1, 2, 1, 1]
     ]
-    const notFinishedState = [
+    let notFinishedState = [
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0],
@@ -200,7 +233,7 @@ describe('Testing Node Class', function() {
   });
 
   // describe('minimax', function() {
-  //   const startState = [
+  //   let startState = [
   //     [0, 0, 0, 0, 0, 0, 0],
   //     [0, 0, 0, 0, 0, 0, 0],
   //     [0, 0, 0, 0, 0, 0, 0],
@@ -208,7 +241,7 @@ describe('Testing Node Class', function() {
   //     [0, 0, 0, 0, 0, 0, 0],
   //     [0, 0, 0, 1, 0, 0, 0]
   //   ]
-  //   const finalState = [
+  //   let finalState = [
   //     [0, 0, 0, 0, 0, 0, 0],
   //     [0, 0, 0, 0, 0, 0, 0],
   //     [0, 0, 0, 0, 0, 0, 0],

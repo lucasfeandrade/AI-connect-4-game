@@ -4,13 +4,10 @@ const WIDTH = 7
 const HEIGHT = 6
 
 module.exports = class Node {
-  constructor(parent, state, alpha, beta, depth) {
+  constructor(parent, state, depth) {
     this.parent = parent
     this.state = state
     this.depth = depth
-    this.alpha = alpha
-    this.beta = beta
-    // this.children = []
     this.ownPieces = this.findPieces(1)
     this.advPieces = this.findPieces(2)
   }
@@ -21,7 +18,11 @@ module.exports = class Node {
       let newState = _.cloneDeep(this.state)
       if (newState[i][position] !== 0) {
         newState[i - 1][position] = player
-        return new Node(this, newState, this.alpha, this.beta, this.depth + 1)
+        return new Node(this, newState, this.depth + 1)
+      }
+      if (i === HEIGHT - 1) {
+        newState[HEIGHT - 1][position] = player
+        return new Node(this, newState, this.depth + 1)
       }
     }
   }
@@ -29,10 +30,10 @@ module.exports = class Node {
   isGameOver() {
     if (this.isBoardFull()) return true;
     for (let piece of this.ownPieces) {
-      if (piece.length === 4) return true
+      if (piece.length >= 4) return true
     }
     for (let piece of this.advPieces) {
-      if (piece.length === 4) return true
+      if (piece.length >= 4) return true
     }
     return false
   }

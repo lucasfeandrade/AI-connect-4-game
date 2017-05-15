@@ -1,6 +1,8 @@
 image: node
 
+before_script:
+  - npm install
+
 all_tests:
   script:
-   - npm install
    - npm test
