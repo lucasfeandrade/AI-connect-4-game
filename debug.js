@@ -1,5 +1,6 @@
 //node --inspect --debug-brk debug.js
 //node.js v8 inspector chrome
+const _ = require('lodash')
 const Inf = Infinity;
 const NegInf = Math.log(0);
 const State = require('./src/node')
@@ -26,7 +27,9 @@ const initialState2 = [
 
 
 let inicio = +new Date();
-let newNode = new State(undefined, initialState, 0)
-console.log(alg.minimax(newNode, NegInf, Inf));
+let newNode = new State(undefined, initialState2, 0)
+// let maxDepth = Math.round((_.flattenDeep(newNode.ownPieces).length / 2 + _.flattenDeep(newNode.advPieces).length / 2) / 4) + 6
+// console.log(maxDepth);
+console.log(alg.minimax(newNode, NegInf, Inf, 80));
 let fim = +new Date();
 console.log(`Tempo de execução: ${(fim-inicio)}ms`);
