@@ -28,7 +28,7 @@ const initialState = [
   [0, 0, 0, 0, 0, 0, 0]
 ]
 
-console.log(`This is the connect 4 board: `)
+console.log(`This is the connect 4 board, try to defeat Guintzel: \n`)
 showBoard(initialState)
 prompt.start()
 promptPlayer(initialState)
@@ -37,15 +37,23 @@ function promptPlayer(state) {
   prompt.get(schema, (err, result) => {
     if (err) throw err
     let playerState = createState(state, result.position, 2)
-    // showBoard(playerState)
+    if(!playerState) {
+      console.log(`This is an invalid position, choose other position`)
+      return promptPlayer(state)
+    }
+    console.log(`This was your move: \n`)
+    showBoard(playerState)
     let playerNode = new State(undefined, playerState, 0)
     if (playerNode.isGameOver()) return
     let computerPosition = Algorithm.minimax(playerNode, NegInfinity, Infinity, maxDepth).movePos
     let computerState = createState(playerState, computerPosition, 1)
     let node = new State(undefined, computerState, 0)
-    showBoard(computerState)
-    if (node.isGameOver()) return
-    promptPlayer(computerState);
+    setTimeout(() => {
+      console.log(`This is Ms Guintzel move: \n`)
+      showBoard(computerState)
+      if (node.isGameOver()) return
+      promptPlayer(computerState);
+    }, 1000)
   })
 }
 
@@ -56,8 +64,9 @@ function isColumnFull(state, col) {
 
 function showBoard(state) {
   for (var i = 0; i < state.length; i++) {
-    console.log(JSON.stringify(state[i]))
+    console.log('                ' + JSON.stringify(state[i]))
   }
+  console.log('\n')
 }
 
 function createState(state, position, player) {
