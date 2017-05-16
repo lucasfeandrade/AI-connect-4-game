@@ -37,7 +37,7 @@ function promptPlayer(state) {
   prompt.get(schema, (err, result) => {
     if (err) throw err
     let playerState = createState(state, result.position, 2)
-    if(!playerState) {
+    if (!playerState) {
       console.log(`This is an invalid position, choose other position`)
       return promptPlayer(state)
     }
@@ -60,8 +60,8 @@ function promptPlayer(state) {
       if (node.isGameOver()) {
         console.log(`You have lost !!!
                      Guintzel placed you at his Death Pipeline!!`)
-         return
-       }
+        return
+      }
       promptPlayer(computerState);
     }, 1000)
   })
@@ -89,15 +89,15 @@ function createState(state, position, player) {
 
 function printState(state) {
   for (let line of state) {
-    let string = '';
+    let string = '       \x1b[44m ';
     for (let dot of line) {
       if (dot === 0) {
-        string += '\x1b[37m_ '
+        string += '\x1b[30m\u25CF '
       } else {
-        string += (dot === 1) ? '\x1b[31mX ' : '\x1b[36mO '
+        string += (dot === 1) ? '\x1b[31m\u25CF ' : '\x1b[33m\u25CF '
       }
     }
-    console.log(string)
+    console.log(string + '\x1b[0m')
   }
-  console.log('1 2 3 4 5 6 7');
+  console.log('        1 2 3 4 5 6 7');
 }
