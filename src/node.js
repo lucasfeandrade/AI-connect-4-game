@@ -207,13 +207,13 @@ module.exports = class Node {
         let value = 0;
         if (pieceLength === 2) {
           // 420 for each piece
-          value = 420;
+          value = 1;
         } else if (pieceLength === 3) {
           // 8820 for each piece
-          value = 8820;
+          value = 21;
         } else if (pieceLength >= 4) {
           // 123480 for each piece
-          value = 123480;
+          value = 294;
         }
         if (player === 1) score += value;
         else score -= value;

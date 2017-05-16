@@ -18,7 +18,7 @@ const schema = {
 
 const NegInfinity = Math.log(0);
 const HEIGHT = 6
-const maxDepth = 2
+const maxDepth = 6
 const initialState = [
   [0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0],
