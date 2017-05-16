@@ -1,21 +1,22 @@
 const Inf = Infinity;
-const NegInf = Math.log(0);
+const NegInfinity = Math.log(0);
+const maxDepth = 8;
 
 function minimax(node, alpha, beta, maxDepth) {
   'use strict'
 
   let isMax = node.depth % 2 === 0;
   let player = (node.depth % 2) + 1;
-  let value = (isMax) ? NegInf : Inf;
+  let value = (isMax) ? NegInfinity : Infinity;
+
   let movePos;
 
-
-  if (node.isGameOver()) return [node.findUtility(), undefined]
-  if (node.depth >= maxDepth) return [node.findUtility(), undefined]
+  if (node.isGameOver() || node.depth >= maxDepth)
+    return { value: node.findUtility(), movePos: undefined };
   for (let pos of [3, 4, 2, 5, 1, 6, 0]) {
     let nodeChild = node.createChild(pos, player);
     if (nodeChild) {
-      let childValue = minimax(nodeChild, alpha, beta, maxDepth)[0];
+      let childValue = minimax(nodeChild, alpha, beta, maxDepth).value;
       if (isMax) {
         if (childValue > value) {
           value = childValue;
@@ -30,11 +31,11 @@ function minimax(node, alpha, beta, maxDepth) {
         beta = Math.min(beta, value)
       }
       if (alpha >= beta) {
-        return [value, movePos];
+        return { value, movePos };
       }
     }
   }
-  return [value, movePos];
+  return { value, movePos };
 }
 
 module.exports = { minimax }
