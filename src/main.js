@@ -28,8 +28,8 @@ const initialState = [
   [0, 0, 0, 0, 0, 0, 0]
 ]
 
-console.log(`This is the connect 4 board, try to defeat Guintzel: \n`)
-showBoard(initialState)
+console.log(`This is the connect 4 board, try to defeat Guintzel (The Digital Boss): \n`)
+printState(initialState)
 prompt.start()
 promptPlayer(initialState)
 
@@ -44,14 +44,24 @@ function promptPlayer(state) {
     console.log(`This was your move: \n`)
     printState(playerState)
     let playerNode = new State(undefined, playerState, 0)
-    if (playerNode.isGameOver()) return
+    if (playerNode.isGameOver()) {
+      console.log(`Congratulationzzzzzzzz !!!!!
+                   The Guintzel Boss has been defeated !!!
+                   Prepare yourself for the next boss :
+                    Luiz Santos`)
+      return
+    }
     let computerPosition = Algorithm.minimax(playerNode, NegInfinity, Infinity, maxDepth).movePos
     let computerState = createState(playerState, computerPosition, 1)
     let node = new State(undefined, computerState, 0)
     setTimeout(() => {
       console.log(`This is Ms Guintzel move: \n`)
       printState(computerState)
-      if (node.isGameOver()) return
+      if (node.isGameOver()) {
+        console.log(`You have lost !!!
+                     Guintzel placed you at his Death Pipeline!!`)
+         return
+       }
       promptPlayer(computerState);
     }, 1000)
   })
@@ -60,13 +70,6 @@ function promptPlayer(state) {
 
 function isColumnFull(state, col) {
   return state[0][col] !== 0;
-}
-
-function showBoard(state) {
-  for (var i = 0; i < state.length; i++) {
-    console.log('                ' + JSON.stringify(state[i]))
-  }
-  console.log('\n')
 }
 
 function createState(state, position, player) {
