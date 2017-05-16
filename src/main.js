@@ -43,7 +43,7 @@ function promptPlayer(state) {
     let computerPosition = Algorithm.minimax(playerNode, NegInfinity, Infinity, maxDepth).movePos
     let computerState = createState(playerState, computerPosition, 1)
     let node = new State(undefined, computerState, 0)
-    showBoard(computerState)
+    printState(computerState)
     if (node.isGameOver()) return
     promptPlayer(computerState);
   })
@@ -73,4 +73,19 @@ function createState(state, position, player) {
       return newState
     }
   }
+}
+
+function printState(state) {
+  for (let line of state) {
+    let string = '';
+    for (let dot of line) {
+      if (dot === 0) {
+        string += '\x1b[37m_ '
+      } else {
+        string += (dot === 1) ? '\x1b[31mX ' : '\x1b[36mO '
+      }
+    }
+    console.log(string)
+  }
+  console.log('1 2 3 4 5 6 7');
 }
