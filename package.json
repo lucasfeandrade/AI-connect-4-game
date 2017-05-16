@@ -2,7 +2,8 @@
   "dependencies": {
     "chai": "^3.5.0",
     "lodash": "^4.17.4",
-    "mocha": "^3.3.0"
+    "mocha": "^3.3.0",
+    "prompt": "^1.0.0"
   },
   "name": "ai-connect-4-game",
   "version": "1.0.0",

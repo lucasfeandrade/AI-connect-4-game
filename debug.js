@@ -30,6 +30,6 @@ let inicio = +new Date();
 let newNode = new State(undefined, initialState2, 0)
 // let maxDepth = Math.round((_.flattenDeep(newNode.ownPieces).length / 2 + _.flattenDeep(newNode.advPieces).length / 2) / 4) + 6
 // console.log(maxDepth);
-console.log(alg.minimax(newNode, NegInf, Inf, 80));
+console.log(alg.minimax(newNode, NegInf, Inf, 7));
 let fim = +new Date();
 console.log(`Tempo de execução: ${(fim-inicio)}ms`);
