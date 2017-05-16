@@ -42,7 +42,7 @@ function promptPlayer(state) {
       return promptPlayer(state)
     }
     console.log(`This was your move: \n`)
-    showBoard(playerState)
+    printState(playerState)
     let playerNode = new State(undefined, playerState, 0)
     if (playerNode.isGameOver()) return
     let computerPosition = Algorithm.minimax(playerNode, NegInfinity, Infinity, maxDepth).movePos
@@ -50,7 +50,7 @@ function promptPlayer(state) {
     let node = new State(undefined, computerState, 0)
     setTimeout(() => {
       console.log(`This is Ms Guintzel move: \n`)
-      showBoard(computerState)
+      printState(computerState)
       if (node.isGameOver()) return
       promptPlayer(computerState);
     }, 1000)
@@ -82,4 +82,19 @@ function createState(state, position, player) {
       return newState
     }
   }
+}
+
+function printState(state) {
+  for (let line of state) {
+    let string = '';
+    for (let dot of line) {
+      if (dot === 0) {
+        string += '\x1b[37m_ '
+      } else {
+        string += (dot === 1) ? '\x1b[31mX ' : '\x1b[36mO '
+      }
+    }
+    console.log(string)
+  }
+  console.log('1 2 3 4 5 6 7');
 }
